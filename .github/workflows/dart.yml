@@ -1,20 +1,14 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
-name: Dart
-
+name: Flutter Web
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
+    branches:
+      - main
 jobs:
   build:
+    name: Build Web
+    env:
+      my_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
@@ -26,11 +20,15 @@ jobs:
       - run: |
           cd build/web
           git init
-          git config --global user.email 61540975@qq.com
-          git config --global user.name mLiXin
+          # type configurations: your user.email and user.name followed lines 
+          # git config --global user.email your_email 
+          # git config --global user.name your_name 
+          git config --global user.email 203916606@qq.com
+          git config --global user.name SuperLiXin
           git status
-          git remote add origin https://mLiXin:jy213003@github.com/mLiXin/flutter_ark_track.git
-          git checkout -b gh-pages
+          # change this remote url for examle your remote url is https://github.com/onatcipli/flutter_web.git then the following:
+          git remote add origin https://${{secrets.commit_secret}}@github.com/SuperLiXin/superlixin.github.io.git
+          git checkout -b main
           git add --all
           git commit -m "update"
-          git push origin gh-pages -f
+          git push origin main -f
